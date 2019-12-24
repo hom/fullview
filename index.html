@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .button-wrapper {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+    #iframe-wrapper {
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+  <div id="iframe-wrapper" style="width: 500px; height: 400px">
+    <p class="button-wrapper">
+      <button class="fullscreen-button" onclick="onRequestFullScreen()">全屏</button>
+      <button class="exit-fullscreen-button" onclick="onExitFullScreen()" style="display: none;">退出全屏</button>
+    </p>
+    <iframe id="iframe" src="./content.html" frameborder="0" width="100%" height="100%"></iframe>
+  </div>
+</body>
+</html>
+
+<script>
+function onRequestFullScreen() {
+  const fullscreenWrapper = document.createElement('div');
+  fullscreenWrapper.id = 'fullscreen-wrapper';
+  fullscreenWrapper.style.position = 'absolute';
+  fullscreenWrapper.style.top = 0;
+  fullscreenWrapper.style.left = 0;
+  fullscreenWrapper.style.width = '100vw';
+  fullscreenWrapper.style.height = '100vh';
+  // 克隆iframe标签
+  const shadowIframe = document.getElementById('iframe').cloneNode(true);
+  fullscreenWrapper.appendChild(shadowIframe);
+  // 克隆菜单栏
+  const shadowMenuBar = document.getElementsByClassName('button-wrapper')[0].cloneNode(true);
+  fullscreenWrapper.appendChild(shadowMenuBar);
+  // 添加全屏容器元素到页面
+  document.body.appendChild(fullscreenWrapper);
+  
+  document.getElementById('iframe-wrapper').style.visibility = 'hidden';
+  document.getElementsByClassName('exit-fullscreen-button')[1].style.display = 'inline';
+  document.getElementsByClassName('fullscreen-button')[1].style.display = 'none';
+}
+
+function onExitFullScreen() {
+  // 从DOM中移除全屏容器
+  document.getElementById('fullscreen-wrapper').remove();
+  document.getElementById('iframe-wrapper').style.visibility = 'visible';
+}
+</script>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.bootcss.com/echarts/4.4.0-rc.1/echarts.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      /* 设置页面高度，以便绘图能够获取到实际高度 */
+      height: 100vh;
+    }
+  </style>
+</head>
+<body>
+  <!-- 绘图容器的高度自适应父页面的高度时，宽高均设置为100% -->
+  <div id="wrapper" style="width: 100%; height: 100%;"></div>
+</body>
+</html>
+
+<script>
+const echartsInstance = echarts.init(document.getElementById('wrapper'));
+// 监听window页面大小变化时，调整绘图大小
+window.onresize = () => {
+  echartsInstance.resize();
+}
+
+window.onload = () => {
+  setOption(echartsInstance);
+}
+
+function setOption(instance) {
+  const option = {
+    title: {
+      text: 'ECharts 入门示例'
+    },
+    tooltip: {},
+    legend: {
+      data:['销量']
+    },
+    xAxis: {
+      data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+    },
+    yAxis: {},
+    series: [{
+      name: '销量',
+      type: 'bar',
+      data: [5, 20, 36, 10, 10, 20]
+    }]
+};
+  instance.setOption(option)
+}
+</script>
